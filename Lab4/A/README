@@ -1,0 +1,22 @@
+NAME: Bao Khanh Nguyen
+EMAIL: knguyen541@g.ucla.edu
+ID: 505358379
+
+S/N: BBGW19010781
+MAC: 2CF7F106A2E1 (on beaglebone)
+MAC: a8:10:87:58:af:e1 (of WIFI on beaglebone)
+
+// my_beaglebone.jpg: 
+A selfie of me holding my assembled Beaglebone (showing the front of the board)
+
+// connected.png: 
+A screen shot from a USB terminal command session connected to my system, showing that I gave it a name and configured network access.
+
+// copy.png: 
+A screen shot from a local session in which I copy a hello world program from my laptop/desktop to my Beaglebone.
+
+// build_run.png: 
+A screen shot from a WIFI SSH session in which I build and run a trivial (hello world) program.
+
+// git.png:
+A screen shot from a WIFI SSH session in which I install git and clone a repository.

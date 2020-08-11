@@ -1,0 +1,35 @@
+NAME: BAO KHANH NGUYEN
+EMAIL: knguyen541@g.ucla.edu
+ID: 505358379
+
+## lab0.c
+Source code for the program lab0:
+Copies from stdin to stdout
+Given argument --input=infile it will instead read from infile
+Given argument --output=outfile it will instead write to outfile
+Given argument --segfault it will create a segmentation fault
+Given argument --catch it will create activate its own segmentation fault handler when a segmentation fault occurs
+
+## Usage 
+./lab0 --input=filename --output=filename --segfault --catch
+
+## Makefile
+make / make all : will compile the source code lab0.c
+make debug: compiles with -g flag for debugging with gdb
+make clean: removes all files created by the Makefile
+make dist: creates a tarball for submission
+make check: runs a smoke-test. More explicitly runs smokeTest.sh
+
+## smokeTest.sh
+Runs most standard cases to check whether it works
+Shell script that accessed basic copy without errors, handling wrong arguments, handling unable to access files fas input and /or output files and whether the segfault catch is done properly.
+
+## backtrace.png
+Ran with gdb debugger and took a screenshot of the backtrace after segmentation fault
+
+## breakpoint.png
+Ran with debugger and set a breakpoint right before segmentation fault and inspected the variable
+
+
+There was not much to research or look at. Most of the code was referenced from the TAs discussion slide.
+
