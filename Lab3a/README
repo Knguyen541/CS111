@@ -1,0 +1,13 @@
+NAME: BAO KHANH NGUYEN
+EMAIL: knguyen541@g.ucla.edu
+ID: 505358379
+
+## lab3a.c
+Source code for the program lab3a:
+Given as the only mandatory argument a file system (image) the program will analyze the file system and output its analysis to stdout.
+
+## Makefile
+make / make default : will compile the source code lab3a.c
+make clean: removes all files created by the Makefile
+make dist: creates a tarball for submission
+make check: runs the provided sanity check
