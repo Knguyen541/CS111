@@ -4,7 +4,7 @@
 
 OUTPUT=$(uname -a)
 #echo "${OUTPUT}"
-SUB='beaglebone'
+SUB='lasr'
 
 if [[ "${OUTPUT}" =~ .*"$SUB".* ]]
 then
