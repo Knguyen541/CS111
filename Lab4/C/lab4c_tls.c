@@ -131,8 +131,8 @@ void shutdown_bb() {
         errno = 0;
         write(logfd, buf2, ret2);
         if (errno) {
-          fprintf(stderr, "Error writing to file with errno %d: %s. Exiting with return code 1\n", errno, strerror(errno));
-          exit(1);
+          fprintf(stderr, "Error writing to file with errno %d: %s. Exiting with return code 2\n", errno, strerror(errno));
+          exit(2);
         }
   mraa_gpio_close(button);
   mraa_aio_close(sensor);
@@ -196,8 +196,8 @@ void handle_input(char *buf, int ret) {
         fprintf(stderr, "Logging command: %.*s\n", command_length, command);
       write(logfd, command, command_length + 1);
       if (errno) {
-        fprintf(stderr, "Error writing to file with errno %d: %s. Exiting with return code 1\n", errno, strerror(errno));
-        exit(1);
+        fprintf(stderr, "Error writing to file with errno %d: %s. Exiting with return code 2\n", errno, strerror(errno));
+        exit(2);
       }
     }
 
@@ -219,50 +219,50 @@ int main(int argc, char * argv[]) {
     switch(i) {
     case 'p':
       period = atoi(optarg);
-	  if (period < 0) {
-	    fprintf(stderr, "Period argument is non-positive\n");
+      if (period < 0) {
+	fprintf(stderr, "Period argument is non-positive\n");
         exit(1);
-	  }
-	  break;
+      }
+      break;
     case 's':
-	  if(strlen(optarg) >= 2 || (*optarg != 'F' && *optarg != 'C')) {
-      fprintf(stderr, "scale argument should be either 'F' for Fahrenheit or 'C' for Celsius\n");
-      exit(1);
+      if(strlen(optarg) >= 2 || (*optarg != 'F' && *optarg != 'C')) {
+	fprintf(stderr, "scale argument should be either 'F' for Fahrenheit or 'C' for Celsius\n");
+	exit(1);
       }
       scale = *optarg;
-	  break;
+      break;
     case 'l':
-	  log_flag = 1;
-	  logfile = optarg;
+      log_flag = 1;
+      logfile = optarg;
       logfd = open(logfile, O_WRONLY | O_TRUNC | O_CREAT, 0666);
       if(logfd == -1) {
-	    fprintf(stderr, "Open logfile error with errno %d: %s. File %s could not be opened/created. Exiting with return code 1\n", errno, strerror(errno), logfile);
-        exit(1);
+	fprintf(stderr, "Open logfile error with errno %d: %s. File %s could not be opened/created. Exiting with return code 2\n", errno, strerror(errno), logfile);
+        exit(2);
         }
       break;
     case 'i':
-	  idflag = 1;
-	  id = atoi(optarg);
-	  if(debug)
-	    fprintf(stderr, "Idnumber: %s, number of digits: %ld\n", optarg, strlen(optarg));
-	  if(strlen(optarg) != 9) {
-	    fprintf(stderr, "id argument is not a 9-digit-number\n");
-	    exit(1);
-	    }
-	  break;
+      idflag = 1;
+      id = atoi(optarg);
+      if(debug)
+	fprintf(stderr, "Idnumber: %s, number of digits: %ld\n", optarg, strlen(optarg));
+      if(strlen(optarg) != 9) {
+	fprintf(stderr, "id argument is not a 9-digit-number\n");
+	exit(1);
+      }
+      break;
     case 'h':
-	  hostflag = 1;
-	  hostname = optarg;
-	  break;
+      hostflag = 1;
+      hostname = optarg;
+      break;
     case 'd':
       debug = 1;
       break;
     default:
-	  error_handling();
-	  break;
-      }
-    } 
-
+      error_handling();
+      break;
+    }
+  } 
+  
   if(!log_flag) {
     fprintf(stderr, "--log=logfile argument is mandatory\n");
     error_handling();
@@ -329,20 +329,20 @@ int main(int argc, char * argv[]) {
   serv_addr.sin_port = htons(portnumber);
   connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr));
   if (errno) {
-    fprintf(stderr, "Error connecting socket to %s with portnumber %d  with errno %d: %s. Exiting with return code 1\n", hostname, portnumber, errno, strerror(errno));
-    exit(1);
+    fprintf(stderr, "Error connecting socket to %s with portnumber %d  with errno %d: %s. Exiting with return code 2\n", hostname, portnumber, errno, strerror(errno));
+    exit(2);
   }
   if(debug)
     fprintf(stderr, "Established connection.\n");
 
-  //fcntl(sockfd, F_SETFL, O_NONBLOCK);
+  fcntl(sockfd, F_SETFL, O_NONBLOCK);
 
   SSL_library_init();  
   //Initialize the error message
   SSL_load_error_strings();
   OpenSSL_add_all_algorithms();
-  //newContext = SSL_CTX_new(TLSv1_client_method());
-  newContext = SSL_CTX_new(TLS_client_method());
+  newContext = SSL_CTX_new(TLSv1_client_method());
+  //newContext = SSL_CTX_new(TLS_client_method());
   if (newContext == NULL) {
     fprintf(stderr, "Error getting ssl context with errno %d: %s. Exiting with return code 2\n", errno, strerror(errno));
     exit(2);
@@ -359,10 +359,10 @@ int main(int argc, char * argv[]) {
     exit(2);
   }
   ssl_ret = SSL_connect(sslClient);
-  int ssl_error_ret = 0;
+  //int ssl_error_ret = 0;
   while (ssl_ret == -1) {
     ssl_ret = SSL_connect(sslClient);
-    fd_set rfds;
+    /*fd_set rfds;
     FD_ZERO(&rfds);
     FD_SET(0, &rfds);
 
@@ -382,11 +382,13 @@ int main(int argc, char * argv[]) {
       if (debug)
         fprintf(stderr, "DEFAULT: SSL_error_ret:%d, SSL_ret:%d\n", ssl_error_ret, ssl_ret);
       abort();
-    }
+      }
      
     if (debug)
-      fprintf(stderr, "SSL_ret:%d\n", ssl_ret);
+      fprintf(stderr, "SSL_ret:%d\n", ssl_ret);*/
   }
+  if (debug)
+    fprintf(stderr, "SSL_ret:%d\n", ssl_ret);
   if (ssl_ret != 1) {
     fprintf(stderr, "Error with SSL_connect with errno %d: %s. Exiting with return code 2\n", errno, strerror(errno));
     exit(2);
@@ -402,9 +404,9 @@ int main(int argc, char * argv[]) {
   char buf[1000];
 
 
-  static struct pollfd poll_fds[1];
-  poll_fds[0].fd = STDIN_FILENO;
-  poll_fds[0].events = POLLIN | POLLHUP | POLLERR;
+  //static struct pollfd poll_fds[1];
+  //poll_fds[0].fd = STDIN_FILENO;
+  //poll_fds[0].events = POLLIN | POLLHUP | POLLERR;
 
   while (1) {
   //Even though nothing is written to stdin, read will still return
@@ -419,17 +421,17 @@ int main(int argc, char * argv[]) {
       SSL_write(sslClient, buf2, ret2);
       prev = now;
       if (log_flag) {
-	      errno = 0;
+	errno = 0;
         write(logfd, buf2, ret2);
-	      if (errno) {
-          fprintf(stderr, "Error writing to file with errno %d: %s. Exiting with return code 1\n", errno, strerror(errno));
-          exit(1);
+	if (errno) {
+          fprintf(stderr, "Error writing to file with errno %d: %s. Exiting with return code 2\n", errno, strerror(errno));
+          exit(2);
         }
       }
       if(debug)
         fputs(buf2, stdout);
     }
-    poll(poll_fds, 1, 0);
+    /*poll(poll_fds, 1, 0);
     if (poll_fds[0].revents & POLLIN) {
       ret = SSL_read(sslClient, &buf, 1000);
       if (ret > 0) {
@@ -439,6 +441,14 @@ int main(int argc, char * argv[]) {
         fprintf(stderr, "Error reading from stdin with errno %d: %s. Exiting with return code 1\n", errno, strerror(errno));
         exit(1);
       }
+      }*/
+    ret = SSL_read(sslClient, &buf, 1000);
+    if (ret > 0) {
+      handle_input(buf, ret);
+    }
+    else if (ret < 0 && errno != EAGAIN) {
+      fprintf(stderr, "Error reading from stdin with errno %d: %s. Exiting with return code 2\n", errno, strerror(errno));
+      exit(2);
     }
   }
 
