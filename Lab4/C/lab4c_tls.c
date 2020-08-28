@@ -244,7 +244,7 @@ int main(int argc, char * argv[]) {
       idflag = 1;
       id = atoi(optarg);
       if(debug)
-	fprintf(stderr, "Idnumber: %s, number of digits: %ld\n", optarg, strlen(optarg));
+	fprintf(stderr, "Idnumber: %s, number of digits: %lu\n", optarg, (unsigned long) strlen(optarg));
       if(strlen(optarg) != 9) {
 	fprintf(stderr, "id argument is not a 9-digit-number\n");
 	exit(1);

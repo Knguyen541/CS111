@@ -16,7 +16,7 @@ tcp: lab4c_tcp.c
 	$(CC) $(CFLAGS) -lmraa -lm -o lab4c_tcp lab4c_tcp.c
 
 tls: lab4c_tls.c
-	$(CC) $(CFLAGS) -lmraa -lm -lssl -lcrypto -o lab4c_tcp lab4c_tls.c
+	$(CC) $(CFLAGS) -lmraa -lm -lssl -lcrypto -o lab4c_tls lab4c_tls.c
 
 clean:
 	rm -f lab4c_tcp lab4c_tls lab4c-505358379.tar.gz
