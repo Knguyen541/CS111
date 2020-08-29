@@ -10,7 +10,7 @@ clean:
 	rm -f lab3b-505358379.tar.gz
 
 dist: lab3a.c 
-	tar -czvf lab3b-505358379.tar.gz lab3b.c README Makefile
+	tar -czvf lab3b-505358379.tar.gz lab3b.py README Makefile
 
 check:
 	./P3B_check.sh 505358379
