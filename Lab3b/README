@@ -1,0 +1,11 @@
+NAME: BAO KHANH NGUYEN
+EMAIL: knguyen541@g.ucla.edu
+ID: 505358379
+
+## lab3b.c
+
+## Makefile
+make / make default : will compile the source code lab3b.c
+make clean: removes all files created by the Makefile
+make dist: creates a tarball for submission
+make check: runs the provided sanity check
