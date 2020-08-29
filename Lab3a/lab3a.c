@@ -308,4 +308,5 @@ int main(int argc, char * argv[]) {
 
 	get_superblock_summary();
 	get_group_summary();
+	return 0;
 }
