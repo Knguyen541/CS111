@@ -3,8 +3,11 @@ CFLAGS = -Wall -Wextra
 
 .PHONY: all clean
 
-default: lab3b.c
-	$(CC) $(CFLAGS) -o lab3b lab3b.c
+default: lab3b.py
+	rm -f lab3b
+	ln -s lab3b.py lab3b
+	chmod +x lab3b
+	echo "Compiled"
 
 clean:
 	rm -f lab3b-505358379.tar.gz
