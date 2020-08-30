@@ -24,7 +24,7 @@ clean:
 dist:
 	tar -czvf lab4c-505358379.tar.gz lab4c_tcp.c lab4c_tls.c README Makefile ./compile.sh
 
-sanitycheck:
+check:
 	./P4C_check.sh 505358379
 
 run:

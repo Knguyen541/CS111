@@ -2,10 +2,16 @@ NAME: BAO KHANH NGUYEN
 EMAIL: knguyen541@g.ucla.edu
 ID: 505358379
 
-## lab3b.c
+## lab3b.py
+python programm that analyze a file system summary (a .csv file in the same 
+format produced for the previous file system project) and reports on all 
+discovered inconsistencies.
+Has mandatory csv file as first argument
+Has optional debug argument for verbose debug output
 
 ## Makefile
-make / make default : will compile the source code lab3b.c
+make / make default: creates a symbolic link lab3b to lab3b.py and creates
+     needed access rights to execute as ./lab3b
 make clean: removes all files created by the Makefile
 make dist: creates a tarball for submission
 make check: runs the provided sanity check

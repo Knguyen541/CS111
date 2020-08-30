@@ -1,3 +1,40 @@
 NAME: BAO KHANH NGUYEN
 EMAIL: knguyen541@g.ucla.edu
 ID: 505358379
+
+## lab4c_tcp.c
+Source file for the program lab4c_tcp.
+Works like the previous lab4b program except that it interacts with a server
+over a tcp connection with the following mandatory arguments:
+--id=9-digit-number
+--host=name or address
+--log=filename
+port number
+Connects to the server specified by the hostname and port number. It will receive
+input which it should interact with in the same way lab4b interacted with stdin.
+It will log all message it sends and receive the server to the logfile specified.
+Furthermore, it will after it made a connection send a LOG message with the given id
+as identification.
+
+## lab4c_tls.c
+Source file for the program lab4c_tls.
+Works the same as with lab4c_tcp but has another security layer with ssl on top of the
+communication over tcp. 
+
+## compile.sh
+Uses uname -a to see whether the environment is beaglebone or the linuxserver 
+and compiles accordingly.
+
+## Makefile
+make / make default : will run the file compile.sh 
+make dummy: compiles lab4c_tcp.c on linuxserver with -DUMMY option
+make dummy2: compiles lab4c_tls.c on linuxserver with -DUMMY option
+make tcp: compiles lab4c_tcp.c on beaglebone
+make tls: compiles lab4c_tls.c on beaglebone
+make clean: removes all files created by the Makefile
+make dist: creates a tarball for submission
+make check: runs the provided sanitycheck
+make run: runs lab4c_tcp with given server
+make run2: runs lab4c_tls with given server
+make dummy: runs lab4c_tcp with given server with debug option
+make dummy2: runs lab4c_tls with given server with debug option
