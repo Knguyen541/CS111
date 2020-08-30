@@ -12,7 +12,7 @@ default: lab3b.py
 clean:
 	rm -f lab3b-505358379.tar.gz
 
-dist: lab3a.c 
+dist: lab3b.py 
 	tar -czvf lab3b-505358379.tar.gz lab3b.py README Makefile
 
 check:

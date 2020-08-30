@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/local/cs/bin/python3
 
 import sys
 from operator import add
@@ -159,7 +159,7 @@ def main():
                 dotdot_entry_dict[parent_inode] = linked_inode
 
             inode_linkcount_counter[linked_inode] += 1
-            inode_to_dirname_linkedInode_dict[inode] = [dirent_name, linked_inode]
+            inode_to_dirname_linkedInode_dict[parent_inode] = [dirent_name, linked_inode]
 
 
     added_free_referenced_block_array = list(map(add,free_blocks,referenced_blocks))
@@ -205,7 +205,7 @@ def main():
             linkcount = 0
         links = inode_linkcount_counter[i]
 
-        if links != linkcount:
+        if links != linkcount and linkcount != 0:
             print('INODE', i, 'HAS', links, 'LINKS BUT LINKCOUNT IS' , linkcount)
             inconsistencies = 1
 
